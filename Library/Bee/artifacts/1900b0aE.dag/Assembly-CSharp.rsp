@@ -355,11 +355,16 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
 "Assets/Scripts/Entities/Match.cs"
 "Assets/Scripts/Entities/Player.cs"
+"Assets/Scripts/Gameplay/Ball.cs"
+"Assets/Scripts/Gameplay/GameplayManager.cs"
+"Assets/Scripts/Gameplay/PlayerController.cs"
 "Assets/Scripts/Global/Constants.cs"
 "Assets/Scripts/Global/DataManager.cs"
 "Assets/Scripts/Global/Debugging.cs"
 "Assets/Scripts/Global/NetworkManager.cs"
 "Assets/Scripts/Global/Utils.cs"
+"Assets/Scripts/lib/EZThread/EZThread.cs"
+"Assets/Scripts/lib/EZThread/EZThreadDemoScript.cs"
 -langversion:9.0
 
 /deterministic

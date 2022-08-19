@@ -8,6 +8,6 @@ public class Debugging : MonoBehaviour
     {
         if (DataManager.myPlayer == null) {
             DataManager.myPlayer = new Player() { id = "ID0", name = "Player0", };
-        }
+        }      
     }
 }

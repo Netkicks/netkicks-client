@@ -8,8 +8,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{9EE57338-1069-23B6-4AA8-5BED04B45250}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -57,16 +56,22 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Entities\Match.cs" />
-    <Compile Include="Assets\Scripts\Global\Constants.cs" />
-    <Compile Include="Assets\Scripts\Global\NetworkManager.cs" />
-    <Compile Include="Assets\Scripts\Entities\Player.cs" />
-    <Compile Include="Assets\Scripts\Global\Debugging.cs" />
-    <Compile Include="Assets\Scripts\Global\DataManager.cs" />
     <Compile Include="Assets\Scripts\Global\Utils.cs" />
+    <Compile Include="Assets\Scripts\Global\Constants.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\GameplayManager.cs" />
+    <Compile Include="Assets\Scripts\Global\NetworkManager.cs" />
+    <Compile Include="Assets\Scripts\Entities\Match.cs" />
+    <Compile Include="Assets\Scripts\Global\DataManager.cs" />
+    <Compile Include="Assets\Scripts\lib\EZThread\EZThread.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\Ball.cs" />
+    <Compile Include="Assets\Scripts\Global\Debugging.cs" />
+    <Compile Include="Assets\Scripts\Entities\Player.cs" />
+    <Compile Include="Assets\Scripts\lib\EZThread\EZThreadDemoScript.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\PlayerController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Scripts\lib\LiteNetLib.dll" />
+    <None Include="Assets\Scripts\lib\EZThread\Readme.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -312,6 +317,9 @@
     <Reference Include="UnityEditor.UnityConnectModule">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.8f1\Editor\Data\Managed\UnityEngine\UnityEditor.UnityConnectModule.dll</HintPath>
     </Reference>
+    <Reference Include="LiteNetLib">
+      <HintPath>Assets\Scripts\lib\LiteNetLib.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.7.8\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
     </Reference>
@@ -320,9 +328,6 @@
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@3.0.2\Runtime\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="LiteNetLib">
-      <HintPath>Assets\Scripts\lib\LiteNetLib.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.8f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\mscorlib.dll</HintPath>
