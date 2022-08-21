@@ -10,6 +10,7 @@ public class NetworkManager : MonoBehaviour
 {
     public static NetManager gameClient;
     public  GameplayManager gameplayManager;
+    NetDataWriter singletonWriter = new NetDataWriter();
 
     void Start()
     {
@@ -47,6 +48,13 @@ public class NetworkManager : MonoBehaviour
                 gameplayManager.UpdateBall(reader.GetFloat(), reader.GetFloat(), reader.GetFloat());
         }
 
+        else if (type == NetworkMessageType.PLAYER_POSITION_UPDATE)
+        {
+            if (gameplayManager != null)
+                gameplayManager.UpdatePlayer(reader.GetByte(), reader.GetFloat(), reader.GetFloat()); ;
+
+        }
+
         else if (type == NetworkMessageType.REQUEST_MATCH_DATA)
         {
             DataManager.currentMatch = JsonConvert.DeserializeObject<Match>(reader.GetString());
@@ -70,6 +78,15 @@ public class NetworkManager : MonoBehaviour
             reason += " - " + details;
         if (SceneManager.GetActiveScene().name == "gameplay")
             SceneManager.LoadScene("lobby");
+    }
+
+    public void BroadcastPosition(float x, float z)
+    {
+        singletonWriter.Reset();
+        singletonWriter.Put(NetworkMessageType.PLAYER_POSITION_UPDATE);
+        singletonWriter.Put(x);
+        singletonWriter.Put(z);
+        gameClient.FirstPeer.Send(singletonWriter, DeliveryMethod.Unreliable);
     }
 
     private void OnGUI()
