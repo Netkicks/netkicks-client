@@ -5,11 +5,9 @@ public class GameplayManager : MonoBehaviour
     public Transform ball;
     public Transform[] playerPrefabs = new Transform[3];
     public Transform[] playerObjects = new Transform[Constants.MAX_PLAYERS_PER_MATCH];
-    public PlayerController bogus;
 
     private void Start()
     {
-        bogus = GameObject.Find("bogus").GetComponent<PlayerController>(); ;
         foreach (Player player in DataManager.currentMatch.players)
         {
             if (player == null)
@@ -27,9 +25,9 @@ public class GameplayManager : MonoBehaviour
     }
 
     public void UpdatePlayer(byte inGameIndex, float x, float z)
-    {   
-        bogus.networkReceivedPosition =
-            new Vector3(x, playerObjects[inGameIndex].position.y, z);
+    {
+        playerObjects[inGameIndex].GetComponent<PlayerController>().UpdatePosition(x, z);
+        //bogus.transform.position = new Vector3(x, 0, z);
     }
 }
 

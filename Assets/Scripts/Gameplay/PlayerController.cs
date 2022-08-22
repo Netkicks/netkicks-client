@@ -5,25 +5,18 @@ using System.Threading;
 public class PlayerController : MonoBehaviour
 {
     public bool isMine = false;
-    public Vector3 networkReceivedPosition;
     Camera mainCamera;
     NetworkManager networkManager;
-    Ray ray;
     RaycastHit hit;
     bool leftMouseButtonDown, rightMouseButtonDown;
-    Vector3 dest;
-    public float speed = 1.4f;
-    Vector3 dir;
-    float distanceFromCursor;
-    public float lerpFactor = 1.5f;
-    Vector3 previousPosition;
+    public float lerpFactor = 0.09f, speed = 120f, distanceFromCursor;
     Vector3 newPosition;
+    public Vector3 networkReceivedPosition, dest, dir;
 
     private void Start()
     {
         if (!isMine)
             return;
-
         networkManager = GameObject.Find("_networkManager").GetComponent<NetworkManager>();
         mainCamera = GameObject.Find("camera").GetComponent<Camera>();
         EZThread.BeginThread(BroadcastPosition);
@@ -31,11 +24,19 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (!isMine)
+        if (Time.deltaTime <= lerpFactor)
         {
-            transform.position = networkReceivedPosition;
-            return;
+            transform.position =
+                           Vector3.Lerp(transform.position, networkReceivedPosition, Time.deltaTime / lerpFactor);
         }
+        else
+        {
+            print("oops!");
+            transform.position = networkReceivedPosition;
+        }
+    
+        if (!isMine)
+            return;
 
         if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit))
         {
@@ -50,15 +51,16 @@ public class PlayerController : MonoBehaviour
                     distanceFromCursor = 0;
             }
 
-            previousPosition = transform.position;
-            newPosition = transform.position
-                + (dir * speed * distanceFromCursor * Time.deltaTime);
-            transform.position = newPosition;
+            dest = (dir * speed * distanceFromCursor * Time.deltaTime);
+            newPosition = transform.position + dest;
         }
     }
 
     private void OnGUI()
     {
+        GUI.Label(new Rect(10, 140, 100, 20), "Lerp factor: " + lerpFactor.ToString());
+        GUI.Label(new Rect(10, 160, 100, 20), "Speed: " + speed.ToString());
+
         if (Input.GetMouseButtonDown(0) && !leftMouseButtonDown)
         {
             leftMouseButtonDown = true;
@@ -83,11 +85,14 @@ public class PlayerController : MonoBehaviour
     void BroadcastPosition()
     {
         Thread.Sleep(Constants.SEND_PLAYER_POSITION_FREQUENCY);
-        if (dest != previousPosition)
-        {
-            networkManager.BroadcastPosition(newPosition.x, newPosition.z);
-            previousPosition = dest;
-        }
+        networkManager.BroadcastPosition(newPosition.x, newPosition.z);
+    }
+
+    public void UpdatePosition(float x, float z)
+    {
+        networkReceivedPosition = new Vector3(x, 0, z);
+        GameObject.Find("bogus").transform.position = networkReceivedPosition;
     }
 }
+
 

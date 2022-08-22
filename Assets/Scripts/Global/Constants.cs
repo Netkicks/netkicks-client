@@ -3,7 +3,7 @@ public class Constants
     public const int MAX_PLAYERS_PER_MATCH = 10;
     public const float MAX_DIST_FROM_CURSOR_TO_BALL = 7f;
     public const float MIN_DIST_FROM_CURSOR_TO_BALL = 1f;
-    public const int SEND_PLAYER_POSITION_FREQUENCY = 25;
+    public const int SEND_PLAYER_POSITION_FREQUENCY = 40;
 }
 
 public class NetworkMessageType
